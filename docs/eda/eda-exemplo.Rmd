@@ -23,12 +23,31 @@ avaliacoes = avaliacoes %>%
            id_reclamacao = `Id da reclamação`, 
            insatisfacao = Insatisfação)
 
-avaliacoes %>% 
-    group_by(id_reclamacao) %>% 
-    ggplot(aes(reorder(id_reclamacao, insatisfacao,FUN = median), insatisfacao, colour = id_reclamacao)) +
-geom_point(color = "darkorange") +
-coord_flip()
+# avaliacoes %>% 
+#     group_by(id_reclamacao) %>% 
+#     ggplot(aes(reorder(id_reclamacao, insatisfacao,FUN = median), insatisfacao, colour = id_reclamacao)) +
+# geom_point(color = "darkorange") +
+# coord_flip()
 
+# ggplot(avaliacoes) + 
+#   geom_bar(mapping = aes(x = insatisfacao))
+
+# ggplot(avaliacoes) + 
+#   geom_bar(mapping = aes(x = avaliador))  
+
+# ggplot(avaliacoes, aes(x = id_reclamacao, y = avaliador)) + 
+#   geom_jitter(width = .1, height = 0, alpha = .6)
+
+avaliacoes %>%
+  filter(insatisfacao > 3) %>% 
+  ggplot() +
+  geom_point(mapping = aes(x = id_reclamacao, 
+                           y = avaliador), 
+             alpha = 0.7) 
+
+avaliacoes %>% filter(insatisfacao > 3) %>% ggplot(data = avaliacoes) +
+  geom_point(mapping = aes(x = id_reclamacao, y = avaliador), 
+             alpha = 0.7) 
 ```
 
 ## Limpeza
