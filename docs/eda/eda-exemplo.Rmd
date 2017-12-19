@@ -17,12 +17,18 @@ Dados coletados na sala.
 avaliacoes = read_csv("../../data/experimento-avaliacao-humana/experimento-de-avaliacao.csv", 
                       col_types = "ccd")
 
+
 avaliacoes = avaliacoes %>% 
     select(avaliador = `Sua matrícula`, 
            id_reclamacao = `Id da reclamação`, 
            insatisfacao = Insatisfação)
 
-glimpse(avaliacoes)
+avaliacoes %>% 
+    group_by(id_reclamacao) %>% 
+    ggplot(aes(reorder(id_reclamacao, insatisfacao,FUN = median), insatisfacao, colour = id_reclamacao)) +
+geom_point(color = "darkorange") +
+coord_flip()
+
 ```
 
 ## Limpeza
@@ -51,12 +57,15 @@ avaliacoes %>%
     summarise(media = mean(n), 
               mediana = median(n))
 
+
 ```
 
 ```{r}
 avaliacoes %>% 
     ggplot(aes(x = reorder(id_reclamacao, insatisfacao, fun = median), y = insatisfacao)) + 
     geom_boxplot() #+     geom_jitter(width = .1, alpha = .7)
+
+
 
 ```
 
